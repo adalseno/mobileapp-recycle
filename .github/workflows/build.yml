@@ -1,10 +1,24 @@
 name: Build
 
+# Changes that only touch documentation don't trigger a build.
+# (Path filters don't apply to tag pushes, so releases always build.)
 on:
   push:
     branches: [main]
     tags: ['v*']   # pushing a tag like v0.2.0 also publishes a GitHub Release
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'branding/**'
+      - 'LICENSE'
+      - 'NOTICE'
   pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'branding/**'
+      - 'LICENSE'
+      - 'NOTICE'
   workflow_dispatch:
 
 permissions:
