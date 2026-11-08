@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Mirrors branding/icon.svg (without the background). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M48,27h12a1.5,1.5 0 0 1 1.5,1.5v4h-15v-4A1.5,1.5 0 0 1 48,27z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M49,32.5h10v5.5c0,3 8,5 8,12v29a4,4 0 0 1 -4,4h-18a4,4 0 0 1 -4,-4v-29c0,-7 8,-9 8,-12z" />
+    <path
+        android:pathData="M46.5,62.5l5.5,5.5l10,-11.5"
+        android:strokeWidth="4.5"
+        android:strokeColor="#0F766E"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+</vector>

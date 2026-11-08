@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Bottle Checker</string>
+    <string name="intro">Scan a drink container’s barcode to see if a BCRS Reverse Vending Machine will accept it.</string>
+
+    <string name="scan_button">Scan barcode</string>
+    <string name="or_type">or type the barcode</string>
+    <string name="barcode_label">Barcode</string>
+    <string name="barcode_placeholder">e.g. 5449000000996</string>
+    <string name="clear">Clear</string>
+    <string name="check_button">Check</string>
+
+    <string name="error_empty">Enter the numbers under the barcode.</string>
+    <string name="error_not_digits">A barcode contains only digits.</string>
+    <string name="error_length">Barcodes have 8, 12 or 13 digits.</string>
+    <string name="error_check_digit">That number doesn’t look right. Check the digits and try again.</string>
+
+    <string name="scan_not_supported">This device can’t scan barcodes. Type the number instead.</string>
+    <string name="scan_permission_denied">Camera access is off. Allow it in Settings, or type the number instead.</string>
+    <string name="scan_downloading">The scanner is being installed by Google Play services. Try again in a moment.</string>
+    <string name="scan_failed">The scan didn’t work. Try again or type the number instead.</string>
+
+    <string name="checking">Checking %1$s…</string>
+    <string name="barcode_shown">Barcode %1$s</string>
+    <string name="eligible_title">Eligible</string>
+    <string name="eligible_body">This container can be returned to a BCRS machine.</string>
+    <string name="not_eligible_title">Not eligible</string>
+    <string name="not_eligible_body">This product isn’t registered for collection by BCRS.</string>
+    <string name="error_title">Couldn’t check</string>
+    <string name="error_network">No connection. Check your internet and try again.</string>
+    <string name="error_timeout">The BCRS website took too long to answer. Try again.</string>
+    <string name="error_server">The BCRS website returned an error. Try again later.</string>
+    <string name="error_unexpected">The BCRS website gave an answer this app doesn’t understand. Try again later.</string>
+    <string name="retry">Retry</string>
+
+    <string name="disclaimer">Not affiliated with BCRS Malta. Data from bcrsmalta.mt.</string>
+</resources>

@@ -1,0 +1,6 @@
+// Branding for iOS. Android equivalents live in gradle.properties.
+// TEAM_ID: your Apple developer team ID (Xcode → Settings → Accounts). It's appended to
+// the bundle ID so a free personal team gets a unique identifier.
+TEAM_ID=
+BUNDLE_ID=io.github.adalseno.bottlechecker
+APP_NAME=Bottle Checker

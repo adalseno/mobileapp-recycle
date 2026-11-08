@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Source app icon (108×108 adaptive-icon grid; keep artwork inside the central 66×66 safe zone).
+     Android: androidApp/src/main/res/drawable/ic_launcher_foreground.xml mirrors these paths.
+     iOS: render to iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/app-icon-1024.png
+          e.g. rsvg-convert -w 1024 -h 1024 branding/icon.svg -o .../app-icon-1024.png -->
+<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="0 0 108 108">
+  <rect width="108" height="108" fill="#0F766E"/>
+  <path fill="#FFFFFF" d="M48,27h12a1.5,1.5 0 0 1 1.5,1.5v4h-15v-4A1.5,1.5 0 0 1 48,27z"/>
+  <path fill="#FFFFFF" d="M49,32.5h10v5.5c0,3 8,5 8,12v29a4,4 0 0 1 -4,4h-18a4,4 0 0 1 -4,-4v-29c0,-7 8,-9 8,-12z"/>
+  <path fill="none" stroke="#0F766E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" d="M46.5,62.5l5.5,5.5l10,-11.5"/>
+</svg>
