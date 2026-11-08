@@ -32,5 +32,8 @@
     <string name="error_unexpected">The BCRS website gave an answer this app doesn’t understand. Try again later.</string>
     <string name="retry">Retry</string>
 
+    <string name="find_return_point">Find a return point</string>
+    <string name="find_return_point_hint">Opens the official map on bcrsmalta.mt</string>
+
     <string name="disclaimer">Not affiliated with BCRS Malta. Data from bcrsmalta.mt.</string>
 </resources>

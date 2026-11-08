@@ -15,13 +15,14 @@
  */
 
 import AVFoundation
-import Shared
+@preconcurrency import Shared
 import UIKit
 import VisionKit
 
 /// iOS barcode scanner, built on VisionKit's DataScannerViewController (iOS 16+, A12 or newer).
 /// Implements the Kotlin `IosScannerBridge` interface declared in shared/src/iosMain.
-final class VisionKitScanner: NSObject, IosScannerBridge {
+// @unchecked Sendable: all mutable state is touched only on the main actor.
+final class VisionKitScanner: NSObject, IosScannerBridge, @unchecked Sendable {
     /// Keeps the delegate alive while the scanner is on screen (the delegate property is weak).
     @MainActor private var activeSession: ScanSession?
 

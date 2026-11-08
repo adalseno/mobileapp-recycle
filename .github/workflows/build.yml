@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   android:
-    name: Android (tests + debug APK)
+    name: Android (tests + release APK)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -28,15 +28,36 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v6
 
-      - name: Shared tests and debug APK
-        run: ./gradlew allTests :androidApp:assembleDebug
+      # The keystore lives in repository secrets (base64). Without them (e.g. pull requests
+      # from forks) the release APK is built unsigned.
+      - name: Decode release keystore
+        env:
+          RELEASE_KEYSTORE_BASE64: ${{ secrets.RELEASE_KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$RELEASE_KEYSTORE_BASE64" ]; then
+            echo "$RELEASE_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.jks"
+            echo "ORG_GRADLE_PROJECT_releaseStoreFile=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          else
+            echo "No signing secrets: the release APK will be unsigned."
+          fi
+
+      - name: Shared tests and release APK
+        env:
+          ORG_GRADLE_PROJECT_releaseStorePassword: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_releaseKeyAlias: ${{ secrets.RELEASE_KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_releaseKeyPassword: ${{ secrets.RELEASE_KEY_PASSWORD }}
+        run: ./gradlew allTests :androidApp:assembleRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v7
         with:
-          name: bottle-checker-debug-apk
-          path: androidApp/build/outputs/apk/debug/*.apk
+          name: bottle-checker-release-apk
+          path: androidApp/build/outputs/apk/release/*.apk
           if-no-files-found: error
+
+      - name: Remove keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.jks"
 
       - name: Upload test reports
         if: failure()

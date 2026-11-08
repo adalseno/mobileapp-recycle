@@ -57,7 +57,7 @@ class BcrsApi(
 
     companion object {
         const val DEFAULT_ENDPOINT = "https://bcrsmalta.mt/wp-admin/admin-ajax.php"
-        const val USER_AGENT = "BottleChecker/0.1 (+https://github.com/adalseno/mobileapp-recycle)"
+        const val USER_AGENT = "BottleChecker/0.2 (+https://github.com/adalseno/mobileapp-recycle)"
         const val TIMEOUT_MILLIS = 10_000L
 
         private val json = Json { ignoreUnknownKeys = true }
@@ -73,7 +73,7 @@ data class BcrsResponse(
 class BcrsHttpException(val statusCode: Int) : Exception("HTTP $statusCode")
 
 /**
- * Creates the HTTP client. Without an [engine], Ktor picks the platform one
+ * Creates the HTTP client. Without an [engine], the platform one is used
  * (OkHttp on Android, Darwin on iOS). Tests pass a `MockEngine`.
  */
 fun createHttpClient(
@@ -91,5 +91,5 @@ fun createHttpClient(
             agent = BcrsApi.USER_AGENT
         }
     }
-    return if (engine == null) HttpClient(config) else HttpClient(engine, config)
+    return HttpClient(engine ?: defaultHttpEngine(), config)
 }

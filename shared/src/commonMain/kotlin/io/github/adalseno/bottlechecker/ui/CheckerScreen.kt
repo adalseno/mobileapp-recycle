@@ -40,6 +40,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
@@ -66,6 +67,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
@@ -75,6 +77,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.github.adalseno.bottlechecker.data.BcrsLinks
 import io.github.adalseno.bottlechecker.domain.BarcodeValidator.InvalidReason
 import io.github.adalseno.bottlechecker.domain.ErrorKind
 import io.github.adalseno.bottlechecker.resources.Res
@@ -93,12 +96,14 @@ private val MaxContentWidth = 560.dp
 fun CheckerScreen(viewModel: CheckerViewModel, scanner: BarcodeScanner) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
+    val uriHandler = LocalUriHandler.current
     CheckerContent(
         state = state,
         onScan = { scope.launch { viewModel.onScanResult(scanner.scan()) } },
         onInputChange = viewModel::onInputChange,
         onCheck = viewModel::onCheckInput,
         onRetry = viewModel::onRetry,
+        onFindReturnPoint = { uriHandler.openUri(BcrsLinks.RETURN_POINTS) },
     )
 }
 
@@ -110,6 +115,7 @@ fun CheckerContent(
     onInputChange: (String) -> Unit,
     onCheck: () -> Unit,
     onRetry: () -> Unit,
+    onFindReturnPoint: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val loading = state.check is CheckState.Loading
@@ -211,6 +217,24 @@ fun CheckerContent(
                 ) { check ->
                     ResultArea(check, onRetry)
                 }
+
+                HorizontalDivider()
+
+                OutlinedButton(
+                    onClick = onFindReturnPoint,
+                    modifier = Modifier.fillMaxWidth().height(48.dp),
+                ) {
+                    Icon(Icons.Filled.Place, contentDescription = null, modifier = Modifier.size(18.dp))
+                    Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+                    Text(stringResource(Res.string.find_return_point))
+                }
+                Text(
+                    text = stringResource(Res.string.find_return_point_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
 
                 Spacer(Modifier.height(8.dp))
                 Text(
