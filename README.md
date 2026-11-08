@@ -18,6 +18,12 @@ a **BCRS Malta** Reverse Vending Machine will accept it.
 - **Find a return point** button that opens the official map on bcrsmalta.mt.
 - Phone and tablet/iPad layouts, light and dark theme.
 
+## Download
+
+Get the latest Android APK from [Releases](https://github.com/adalseno/mobileapp-recycle/releases).
+Open it on the phone and allow "Install unknown apps" when asked. The iOS `.ipa` there is
+unsigned: see [iOS](#ios-on-a-mac) below.
+
 ## Status
 
 - **Android:** tested on a real phone running Android 17.

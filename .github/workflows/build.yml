@@ -3,6 +3,7 @@ name: Build
 on:
   push:
     branches: [main]
+    tags: ['v*']   # pushing a tag like v0.2.0 also publishes a GitHub Release
   pull_request:
   workflow_dispatch:
 
@@ -119,3 +120,42 @@ jobs:
         with:
           name: ios-test-reports
           path: shared/build/reports/tests/
+
+  # Runs only for version tags: attaches the signed APK and the unsigned .ipa to a GitHub Release.
+  release:
+    name: GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [android, ios]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download build outputs
+        uses: actions/download-artifact@v8
+        with:
+          path: dist
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          cp dist/bottle-checker-release-apk/*.apk "bottle-checker-$TAG.apk"
+          cp dist/bottle-checker-unsigned-ipa/*.ipa "bottle-checker-$TAG-ios-unsigned.ipa"
+          cat > notes.md <<'NOTES'
+          **Android:** download the `.apk` and open it on the phone (allow "Install unknown apps" when asked).
+          Signed with the project's release key, so newer versions install over older ones.
+
+          **iOS:** the `.ipa` is unsigned. It only installs after re-signing (e.g. Sideloadly or AltStore
+          with an Apple ID); otherwise build from Xcode, see the README. Not yet tested on an iPhone/iPad.
+
+          Not affiliated with BCRS Malta.
+          NOTES
+          gh release create "$TAG" \
+            "bottle-checker-$TAG.apk" \
+            "bottle-checker-$TAG-ios-unsigned.ipa" \
+            --title "Bottle Checker $TAG" \
+            --notes-file notes.md \
+            --generate-notes
